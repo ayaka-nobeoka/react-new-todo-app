@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [input, setInput] = useState("");
+  const [add, setAdd] = useState([]);
+  const handleInput = (e) => {
+    setInput(e.target.value);
+  };
+  const handleAdd = () => {
+    const newTodo = {
+      id: uuidv4(), // ← ここでユニークIDを作る！
+      text: input,
+    };
+    const newArray = [...add, newTodo];
+    if (input.trim() === "") return;
+    setAdd(newArray);
+    setInput("");
+  };
+  const handleDelete = (id) => {
+    const newArray = add.filter((item) => item.id !== id);
+    setAdd(newArray);
+    console.log(newArray);
+  };
+  const handleCompleted = () => {};
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>TODO APP</h1>
+      <input value={input} onChange={handleInput} />
+      <button onClick={handleAdd}>追加</button>
+      <ul>
+        {add.map((item, id) => (
+          <li key={id}>
+            {item.text}
+            <button onClick={() => handleDelete(item.id)}>削除</button>
+            <button onClick={handleCompleted}>完了</button>
+          </li>
+        ))}
+      </ul>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
