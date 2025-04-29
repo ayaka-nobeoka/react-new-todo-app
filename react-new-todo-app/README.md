@@ -1,12 +1,18 @@
-# React + Vite
+# react-new-todo-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## やったこと ✅
 
-Currently, two official plugins are available:
+- [✔️] Vite + React プロジェクトを作成する
+- [✔️] TODO を追加できるフォームを作る
+- [✔️] TODO リストを画面に表示する
+- [✔️] TODO を配列で管理する
+- [✔️] 入力後にインプットフォームをリセットする
+- [✔️] 削除ボタンを作って、id を使って削除できるようにする
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 次にやること 🔥
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [ ] 完了ボタンを作って、完了マーク（線を引く）をつける
+- [ ] ローカルストレージに保存して、ページを閉じてもデータが残るようにする
+- [ ] スタイリング（CSS）で見た目を整える
