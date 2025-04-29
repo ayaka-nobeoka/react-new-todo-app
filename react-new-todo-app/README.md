@@ -21,10 +21,10 @@
 
 ## 使う state
 
-- `todos`:
+- `add`:
   - 配列の形
   - それぞれの TODO はオブジェクト（id, title, completed）
-- `inputValue`:
+- `input`:
   - いま入力中のテキスト
 
 ## コンポーネント構成（予定）
