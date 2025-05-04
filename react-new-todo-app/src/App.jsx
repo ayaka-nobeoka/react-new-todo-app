@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
+import TodoItem from "./TodoItem";
 
 function App() {
   const [input, setInput] = useState("");
-  const [add, setAdd] = useState([]);
+
+  //初期値をlocalStorageから読み込んで使う
+  const [add, setAdd] = useState(() => {
+    const data = localStorage.getItem("todos");
+    return data ? JSON.parse(data) : [];
+  });
+
+  // addが変わるたびにローカルストレージに保存
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(add));
+  }, [add]);
+
   const handleInput = (e) => {
     setInput(e.target.value);
   };
@@ -42,25 +54,21 @@ function App() {
       <input value={input} onChange={handleInput} />
       <button onClick={handleAdd}>追加</button>
 
-      <h2>未完了リスト</h2>
+      <h2>📋 未完了リスト</h2>
       <ul>
         {add
           .filter((item) => item.completed === false)
-          .map((item, id) => (
-            <li
-              key={id}
-              style={{
-                textDecoration: item.completed ? "line-through" : "none",
-              }}
-            >
-              {item.text}
-              <button onClick={() => handleDelete(item.id)}>削除</button>
-              <button onClick={() => handleCompleted(item.id)}>完了</button>
-            </li>
+          .map((item) => (
+            <TodoItem
+              key={item.id}
+              item={item}
+              onDelete={() => handleDelete(item.id)}
+              onCompleted={() => handleCompleted(item.id)}
+            />
           ))}
       </ul>
 
-      <h2>完了リスト</h2>
+      <h2>✅ 完了リスト</h2>
       <ul>
         {add
           .filter((item) => item.completed === true)
@@ -73,7 +81,6 @@ function App() {
             >
               {item.text}
               <button onClick={() => handleDelete(item.id)}>削除</button>
-              <button onClick={() => handleCompleted(item.id)}>完了</button>
             </li>
           ))}
       </ul>
@@ -82,3 +89,11 @@ function App() {
 }
 
 export default App;
+
+// useStateでaddを管理している
+
+// handleAddでTODOを追加
+
+// handleDeleteでTODOを削除
+
+// handleCompletedでTODOを完了に切り替え
