@@ -12,6 +12,7 @@ function App() {
     const newTodo = {
       id: uuidv4(), // ← ここでユニークIDを作る！
       text: input,
+      completed: false,
     };
     const newArray = [...add, newTodo];
     if (input.trim() === "") return;
@@ -23,20 +24,58 @@ function App() {
     setAdd(newArray);
     console.log(newArray);
   };
-  const handleCompleted = () => {};
+
+  const handleCompleted = (id) => {
+    const complete = add.map((item) => {
+      if (item.id === id) {
+        return { ...item, completed: !item.completed };
+      }
+      return item;
+    });
+    console.log(complete); // ✅ここでまず新しく作った配列を確認！！
+    setAdd(complete);
+  };
+
   return (
     <>
       <h1>TODO APP</h1>
       <input value={input} onChange={handleInput} />
       <button onClick={handleAdd}>追加</button>
+
+      <h2>未完了リスト</h2>
       <ul>
-        {add.map((item, id) => (
-          <li key={id}>
-            {item.text}
-            <button onClick={() => handleDelete(item.id)}>削除</button>
-            <button onClick={handleCompleted}>完了</button>
-          </li>
-        ))}
+        {add
+          .filter((item) => item.completed === false)
+          .map((item, id) => (
+            <li
+              key={id}
+              style={{
+                textDecoration: item.completed ? "line-through" : "none",
+              }}
+            >
+              {item.text}
+              <button onClick={() => handleDelete(item.id)}>削除</button>
+              <button onClick={() => handleCompleted(item.id)}>完了</button>
+            </li>
+          ))}
+      </ul>
+
+      <h2>完了リスト</h2>
+      <ul>
+        {add
+          .filter((item) => item.completed === true)
+          .map((item, id) => (
+            <li
+              key={id}
+              style={{
+                textDecoration: item.completed ? "line-through" : "none",
+              }}
+            >
+              {item.text}
+              <button onClick={() => handleDelete(item.id)}>削除</button>
+              <button onClick={() => handleCompleted(item.id)}>完了</button>
+            </li>
+          ))}
       </ul>
     </>
   );
